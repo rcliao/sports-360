@@ -80,6 +80,17 @@ app.get('/api/tv/view/stop', function(req, res) {
   stopView();
 });
 
+app.post('/api/tv/drv/channel/:channelId', function(req, res) {
+  // http://{{STB_IP}}:8080/dvr/play?uniqueId=68
+  request(setTopBoxIP + ':8080/dvr/play?uniqueId=' + req.params.channelId, function(err1, res1, body1) {
+      if (!err1 && res1.statusCode == 200) {
+        res.status(200).send();
+      } else {
+        console.log('Change to channel does not work.');
+      }
+  });
+})
+
 app.post('/api/notification', function(req, res) {
   console.log('sending notification to DirectTV');
   stopView(backToNormalView);
@@ -109,6 +120,11 @@ io.on('connection', function(socket) {
 
   socket.on('back', function() {
     console.log('back to normal view');
+    stopView();
+  });
+
+  socket.on('stop', function() {
+    console.log('stopping itv app');
     stopView();
   });
 });

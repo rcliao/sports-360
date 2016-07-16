@@ -1,5 +1,9 @@
 <ion-content>
   <div class="list card">
+    <div class="item">
+      <h2>At AT&T Park</h2>
+      <p>Giants vs Dodger</p>
+    </div>
     <div class="item item-image">
       <img data-ng-src="{{previewSrc}}" ng-click="preview()">
     </div>
@@ -12,13 +16,17 @@
     <label class="item item-input item-stacked-label"
       ng-show="done">
       <span class="input-label">Title</span>
-      <input type="text" placeholder="Title" ng-model="title">
+      <input type="text" placeholder="Say something about video..." ng-model="title">
     </label>
     <a class="item item-icon-left"
       ng-show="done"
       ng-click="share()">
       <i class="icon ion-share"></i>
       Share
+    </a>
+    <a class="item"
+      ng-show="done">
+      Cancel
     </a>
   </div>
 </ion-content>

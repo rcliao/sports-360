@@ -4,7 +4,7 @@ var socket = io.connect(serverUrl);
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+angular.module('starter', ['ionic', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -47,39 +47,31 @@ angular.module('starter', ['ionic'])
         url: '/content-explore',
         templateUrl: 'templates/content-explore.html',
         controller: 'ContentExploreCtrl'
+      })
+      .state('discovery', {
+        url: '/discovery',
+        templateUrl: 'templates/discovery.html',
+        controller: 'DiscoveryCtrl'
+      })
+      .state('libraries', {
+        url: '/libraries',
+        templateUrl: 'templates/libraries.html',
+        controller: 'LibrariesCtrl'
       });
     $urlRouterProvider.otherwise('/home');
 })
 
-.controller('HomeCtrl', ['$scope', '$state', '$http', '$ionicPopup', function($scope, $state, $http, $ionicPopup) {
-  $scope.connectedToCamera = false;
+.service('Camera', function() {
+  return {
+    connected: false
+  };
+})
+
+.controller('HomeCtrl', ['Camera', '$scope', '$state', '$http', '$ionicPopup', function(Camera, $scope, $state, $http, $ionicPopup) {
+  $scope.camera = Camera;
   socket.on('video-vr', function() {
     $state.go('video');
   });
-
-  $scope.connectToCamera = function() {
-    var SSID = 'LGR105_051402.OSC';
-    var cameraWifi = WifiWizard.formatWPAConfig(SSID, '00051402');
-    WifiWizard.setWifiEnabled(true, function() {
-      WifiWizard.addNetwork(cameraWifi, function() {
-        WifiWizard.connectNetwork(SSID, function() {
-          $ionicPopup.alert({
-            title: 'LG CAM 051402',
-            template: 'Connected to Camera'
-          });
-          $scope.connectedToCamera = true;
-        }, handleError);
-      }, handleError);
-    }, handleError);
-
-    function handleError(error) {
-      $scope.connectedToCamera = false;
-      $ionicPopup.alert({
-        title: 'LG CAM 051402',
-        template: 'Oh no right? OH NO PANIC!! \n' + JSON.stringify(error)
-      });
-    }
-  };
 }])
 
 .controller('CaptureVideoCtrl', ['$scope', '$state', '$http', '$timeout', '$interval', '$ionicPopup', '$ionicLoading', function($scope, $state, $http, $timeout, $interval, $ionicPopup, $ionicLoading) {
@@ -115,6 +107,8 @@ angular.module('starter', ['ionic'])
           title: $scope.title
         })
         .then(function() {
+          localStorage.removeItem('done-capturing-video');
+          $scope.done = false;
           $state.go('home');
         });
       }, 1000);
@@ -185,6 +179,50 @@ angular.module('starter', ['ionic'])
 .controller('ContentExploreCtrl', function() {
 
 })
+
+.controller('DiscoveryCtrl', ['Camera', '$scope', '$state', '$ionicPopup', function(Camera, $scope, $state, $ionicPopup) {
+  $scope.connectToCamera = function() {
+    var SSID = 'LGR105_051402.OSC';
+    var cameraWifi = WifiWizard.formatWPAConfig(SSID, '00051402');
+    WifiWizard.setWifiEnabled(true, function() {
+      WifiWizard.addNetwork(cameraWifi, function() {
+        WifiWizard.connectNetwork(SSID, function() {
+          $ionicPopup.alert({
+            title: 'LG CAM 051402',
+            template: 'Connected to Camera'
+          });
+          Camera.connected = true;
+          $state.go('home');
+        }, handleError);
+      }, handleError);
+    }, handleError);
+
+    function handleError(error) {
+      $scope.connectedToCamera = false;
+      $ionicPopup.alert({
+        title: 'LG CAM 051402',
+        template: 'Oh no right? OH NO PANIC!! \n' + JSON.stringify(error)
+      });
+    }
+  };
+}])
+
+.controller('LibrariesCtrl', ['$scope', '$http', '$cordovaSocialSharing', function($scope, $http, $cordovaSocialSharing) {
+  $scope.watchOnTv = function() {
+    // TODO: change TV channel
+    $http.post(serverUrl + '/api/tv/drv/channel/68')
+      .then(function() {
+        alert('Channel changed successfully');
+      });
+  };
+
+  $scope.socialShare = function() {
+    document.addEventListener("deviceready", function () {
+      $cordovaSocialSharing
+        .share('What an exciting game!');
+    });
+  }
+}])
 
 .directive('cardboardGl', [function() {
 
