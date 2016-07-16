@@ -1,0 +1,83 @@
+<html>
+<head>
+
+    <title>HLS</title>
+
+    <script type="text/javascript">
+        window.onerror = function(errorMsg, url, lineNumber){
+            console.log(errorMsg);
+             return true;
+           };
+    </script>
+
+    <script type="text/javascript">
+      // setResolution call has to be made in the head section!
+      if(!!navigator.setResolution)
+        navigator.setResolution(1280,720);
+    </script>
+
+</head>
+
+<body>
+
+    <!--Also tested with internet source "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8" -->
+
+    <!-- Note, to serve set types in server config.  In Apache, inside the <IfModule mime_module> tag:
+        AddType application/x-mpegURL .m3u8
+        AddType video/MP2T .ts
+
+    -->
+
+    <video
+        src="vid/index.m3u8"
+        height="486" width="864"
+        id="vid" autoplay="true"
+        onabort="writeScreen(' ABORT ')"
+        oncanplay="writeScreen(' CAN PLAY ')"
+        oncanplaythrough="writeScreen(' CAN PLAY THROUGH' )"
+        oncuechange="writeScreen(' CUE CHANGE ')"
+        ondurationchange="writeScreen(' DURATION CHANGE ')"
+        onemptied="writeScreen(' EMPTIED ')"
+        onended="writeScreen( 'ENDED' )"
+        onerror="writeScreen(' ERROR' )"
+        onloadeddata="writeScreen(' LOADED DATA ')"
+        onloadedmetadata="writeScreen(' LOADED METADATA ')"
+        onloadstart="writeScreen(' LOAD START ')"
+        onpause="writeScreen(' PAUSE ')"
+        onplay="writeScreen(' PLAY ')"
+        onplaying="writeScreen(' PLAYING ')"
+        onprogress="writeScreen(' PROGRESS ')"
+        onratechange="writeScreen(' RATE CHANGE ')"
+        onseeked="writeScreen(' SEEKED ')"
+        onseeking="writeScreen(' SEEKING ')"
+        onstalled="writeScreen(' STALLED ')"
+        onsuspend="writeScreen(' SUSPEND ')"
+        onvolumechange="writeScreen(' VOLUME CHANGE ')"
+        onwaiting="writeScreen(' WAITING ')"
+    >
+    </video>
+
+    <div style="margin:100px; background-color:white;">
+     <p><strong>Available events:</strong></p>
+     <p id="debug" style="max-height:50px; overflow:scroll"> </p>
+    </div>
+    <!-- Available video events -->
+    <script type="text/javascript">
+
+        writeScreen = function(txt){
+            var container = document.getElementById('debug');
+            container.innerHTML += txt;
+            //console.log(txt);
+        }
+
+        document.getElementById('vid').addEventListener( "qt_timedmetadataupdated", function(){
+
+            //Console.log('metadata updated');
+            writeScreen(' METADATA UPDATED ');
+
+        }, false );
+
+    </script>
+
+</body>
+</html>
