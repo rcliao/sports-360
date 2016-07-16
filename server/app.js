@@ -2,6 +2,7 @@
 var express = require('express');
 //Let socket.io handle WebSockets
 var sio = require('socket.io');
+var bodyParser = require('body-parser');
 
 var request = require('request');
 
@@ -14,6 +15,7 @@ var serverIp = 'http://10.10.31.21:4005';
 //Include static HTML in the 'public' directory
 app.use(express.static('public'));
 app.use('/video', express.static('hls-example'));
+app.use(bodyParser.json());
 
 function changeToVideoView() {
     request(setTopBoxIP + ':8080/itv/startURL?url=' + serverIp + '/video', function(err1, res1, body1) {
@@ -59,6 +61,10 @@ server.listen(4005, function() {
 app.get('/health', function(req, res) {
   console.log('Still alive!');
   res.status(200).send('work work');
+});
+
+app.post('/api/debug', function(req, res) {
+  console.dir(req.body);
 });
 
 app.get('/api/tv/view/video', function(req, res) {

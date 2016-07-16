@@ -1,4 +1,4 @@
-// Ionic Starter App
+var serverUrl = 'http://ef16a42e.ngrok.io';
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -25,7 +25,112 @@ angular.module('starter', ['ionic'])
   });
 })
 
-.controller('AppCtrl', ['$scope', '$ionicModal', function($scope, $ionicModal) {
+.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+      .state('video', {
+        url: '/video',
+        templateUrl: 'templates/video.html',
+        controller: 'VideoCtrl'
+      })
+      .state('capture-video', {
+        url: '/capture-video',
+        templateUrl: 'templates/capture-video.html',
+        controller: 'CaptureVideoCtrl'
+      })
+      .state('home', {
+        url: "/home",
+        templateUrl: "templates/home.html",
+        controller: "HomeCtrl"
+      });
+    $urlRouterProvider.otherwise('/home');
+})
+
+.controller('HomeCtrl', ['$scope', '$state', '$http', '$ionicPopup', function($scope, $state, $http, $ionicPopup) {
+  $scope.connectedToCamera = false;
+
+  $scope.connectToCamera = function() {
+    var SSID = 'LGR105_051402.OSC';
+    // happy callback hell >.>
+    var cameraWifi = WifiWizard.formatWPAConfig(SSID, '00051402');
+    WifiWizard.setWifiEnabled(true, function() {
+      WifiWizard.addNetwork(cameraWifi, function() {
+        WifiWizard.connectNetwork(SSID, function() {
+          $ionicPopup.alert({
+            title: 'LG CAM 051402',
+            template: 'Connected to Camera'
+          });
+          $scope.connectedToCamera = true;
+        }, handleError);
+      }, handleError);
+    }, handleError);
+
+    function handleError(error) {
+      $scope.connectedToCamera = false;
+      $ionicPopup.alert({
+        title: 'LG CAM 051402',
+        template: 'Oh no right? OH NO PANIC!! \n' + JSON.stringify(error)
+      });
+    }
+  };
+}])
+
+.controller('CaptureVideoCtrl', ['$scope', '$http', '$timeout', '$interval', '$ionicPopup', '$ionicLoading', function($scope, $http, $timeout, $interval, $ionicPopup, $ionicLoading) {
+  var cameraBaseUrl = 'http://192.168.43.1:6624';
+  $scope.previewSrc = 'img/att-splash.jpg';
+
+  $scope.captureVideo = function() {
+    $http.post(cameraBaseUrl + '/osc/commands/execute', {
+      "name": "camera.startCapture"
+    }, {
+      headers: {
+        'X-XSRF-Protected': 1
+      }
+    }).then(function(resp) {
+      $scope.capturing = true;
+      // cant get the binary content to be displayed in browser
+      $timeout(stopCapture, 5000);
+    }, handleError);
+  };
+
+  function stopCapture() {
+    // $interval.cancel($scope.previewInterval);
+    $http.post(cameraBaseUrl + '/osc/commands/execute', {
+      name: "camera.stopCapture"
+    }, {
+      headers: {
+        'X-XSRF-Protected': 1
+      }
+    })
+    .then(function(resp) {
+      $scope.captureId = resp.data.id;
+      $timeout(getCaptureState, 1000);
+    }, handleError);
+  }
+
+  function getCaptureState() {
+    $http.post(cameraBaseUrl + '/osc/commands/status', {
+      id: $scope.captureId
+    }, {
+      headers: {
+        'X-XSRF-Protected': 1
+      }
+    }).then(function(resp) {
+      if (resp.data.state === 'done') {
+        $scope.capturing = false;
+      }
+    }, handleError);
+  }
+
+  function handleError(error) {
+    $ionicPopup.alert({
+      title: 'LG CAM 051402',
+      template: 'Oh no right? OH NO PANIC!! \n' + JSON.stringify(error)
+    });
+  }
+}])
+
+.controller('VideoCtrl', ['$scope', '$state', function($scope, $state) {
+
 }])
 
 .directive('cardboardGl', [function() {

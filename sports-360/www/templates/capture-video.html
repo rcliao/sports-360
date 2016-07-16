@@ -1,0 +1,12 @@
+<ion-content>
+  <div class="list card">
+    <div class="item item-image">
+      <img data-ng-src="{{previewSrc}}">
+    </div>
+    <a class="item item-icon-left"
+      ng-click="captureVideo()">
+      <i class="icon ion-camera"></i>
+      {{capturing ? 'Stop' : 'Capture'}}
+    </a>
+  </div>
+</ion-content>

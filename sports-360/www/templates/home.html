@@ -1,0 +1,26 @@
+<ion-content>
+  <div class="list card">
+    <div class="item item-image">
+      <img src="img/att-splash.jpg">
+    </div>
+    <a href="#/video" class="item item-icon-left">
+      <i class="icon ion-images"></i>
+      Media Library
+    </a>
+
+    <a href="#" class="item item-icon-left" ng-click="connectToCamera()">
+      <i class="icon ion-camera"></i>
+      {{connectedToCamera ? 'Connected to LG CAM 051402' : 'Connect to Camera'}}
+    </a>
+
+    <a href="#" class="item item-icon-left">
+      <i class="icon ion-image"></i>
+      Capture Image
+    </a>
+
+    <a href="#/capture-video" class="item item-icon-left">
+      <i class="icon ion-videocamera"></i>
+      Capture Video
+    </a>
+  </div>
+</ion-content>
