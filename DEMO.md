@@ -2,13 +2,13 @@ Hi, this is Eric. Well, I'm the only one on the team, so this is the full introd
 
 I want to capture and share priceless moments and atmospheres from sport events in the stadium to TV.
 
-This comes from my prior experience going to see some sports events at stadiums like Dodger Stadium or Stables Center.
+This comes from my prior experience seeing some sports events at stadiums like Dodger Stadium or Stables Center.
 
 I found that my most enjoyable moment was not actually watching the game but cheering with the other people and enjoy the air around the stadium.
 
-Thus, I want to capture this very moment and share it out with the world like other fans that are watching over the DirectTV and cant feel the same environment in the stadium.
+Thus, I want to capture this very moment and share it out to the world like other fans that are watching over the DirectTV and cant feel the same environment in the stadium.
 
-To do so, 360 degree video is the best format to represent the scenario and here is how to capture 360 video in Sports 360
+To do so, 360 degree video is the best format to represent the scenario and here is how Sports 360 captures the video:
 
 --- demo ---
 
@@ -16,27 +16,27 @@ First you can start by connecting to your 360 video camera devices. In this hack
 
 Once you are connected to the camera, you can start capturing 360 video moment by clicking on "Capture video".
 
-And now the LG 360 CAM is capturing 360 video around me at stadium. (point at LG 360 CAM).
+And now the LG 360 CAM is capturing video around me at stadium. (point at LG 360 CAM).
 
-After we are finished capturing the moment, we will get a chance to preview on what has been recorded before sharing this video to TV.
+After we are finished capturing the moment, we will get a chance to preview the video.
 
 Once we are satisfied with the video, we can then "Share to TV".
 
-Share to TV will feature a notification to the people watching the same game in DirectTV.
+Share to TV will feature a notification to the people watching the similar genres in DirectTV.
 
-Fan in front of TV can then select to see the video in their DirectTV.
+Fan in front of TV can then choose to see the video in the TV.
 
-Furthermore, if they want to see this video in VR environment, they can then view this video in VR.
+Furthermore, if they want to see this video in VR environment, they can then view this video in the phone
 
 Noted that this VR experience is better with Google Cardboard!
 
-After viewing the moment, user can choose to save to their library with Sports 360 and explore similar contents in DirectTV or within the app.
+After viewing the moment, user can explore similar contents in DirectTV or within the app and choose to save this video to their library.
 
-With the saved moment, user will be able to review this game later with seeing the full game at DirectTV.
+With the saved moment, user will be able to review this game later with seeing the full game in DirectTV.
 
 Or view the replay again in VR.
 
-And doing some social sharing on Twitter!
+And even share this on social network!
 
 --- end of demo ---
 
