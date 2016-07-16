@@ -117,8 +117,7 @@ angular.module('starter', ['ionic'])
     }
 
     function animate() {
-      var elapsedSeconds = clock.getElapsedTime(),
-          particleRotationDirection = particleRotationDeg <= 180 ? -1 : 1;
+      var elapsedSeconds = clock.getElapsedTime();
 
       requestAnimationFrame(animate);
 
