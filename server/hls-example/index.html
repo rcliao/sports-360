@@ -10,6 +10,8 @@
            };
     </script>
 
+    <script src="/socket.io/socket.io.js"></script>
+
     <script type="text/javascript">
       // setResolution call has to be made in the head section!
       if(!!navigator.setResolution)
@@ -64,11 +66,97 @@
     <!-- Available video events -->
     <script type="text/javascript">
 
+        //Initiate the WebSocket connection through socket.io
+        var socket = io.connect();
+
         writeScreen = function(txt){
             var container = document.getElementById('debug');
             container.innerHTML += txt;
             //console.log(txt);
         }
+
+        function keyHandler(e){
+            var code = e.keyCode;
+
+            //Don't forget to put a BREAK after every case OR it will
+            //Fall through like it does below.
+            switch(code){
+                case 13: // Select / Enter
+                    break;
+                case 48 : // 0
+                    break;
+                case 49 : // 1
+                    break;
+                case 50 : // 2
+                    break;
+                case 51 : // 3
+                    break;
+                case 52 : // 4
+                    break;
+                case 53 : // 5
+                    break;
+                case 54 : // 6
+                    break;
+                case 55 : // 7
+                    break;
+                case 56 : // 8
+                    break;
+                case 57 : // 9
+                    break;
+                case 79 : // Info
+                    break;
+                case 87 : // Rewind Trick play
+                    break;
+                case 9 : // FF Trick play
+                    break;
+                case 65 : //Active
+                    break;
+                case 67 : // Next Trick play
+                    break;
+                case 72 : // red
+                    break;
+                case 74 : // green
+                    break;
+                case 75 : // yellow
+                    break;
+                case 76 : // blue
+                    break;
+                case 80: // Play Trick play
+                    break;
+                case 82 : // Record Trick play
+                    break;
+                case 83 : // Stop Trick play
+                    break;
+                case 85 : // Pause Trick play
+                    break;
+                case 46 : // Back Trick play
+                    break;
+                case 37: //left
+                    socket.emit('back');
+                    break;
+                case 33: //pageup channelUp
+                    break;
+                case 34: //pagedown channelDown
+                    break;
+                case 38: //up
+                    break;
+                case 39: //right
+                    break;
+                case 40: //down
+                    break;
+                case 47: //back
+                    break;
+                case 189 : //dash
+                    break;
+                default :
+                    break;
+            }
+
+            // return false prevents keys from bubbling to UI
+            return false;
+        }
+
+        window.onkeydown = keyHandler;
 
         document.getElementById('vid').addEventListener( "qt_timedmetadataupdated", function(){
 

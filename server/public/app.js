@@ -25,6 +25,7 @@ function keyHandler(e){
     //Fall through like it does below.
     switch(code){
         case 13: // Select / Enter
+            socket.emit('show-video', 'Change it! Darn it!');
             break;
         case 48 : // 0
             break;

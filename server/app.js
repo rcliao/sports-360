@@ -35,10 +35,15 @@ function backToNormalView() {
     });
 }
 
-function stopView() {
+function stopView(cb) {
   request(setTopBoxIP + ':8080/itv/stopITV', function(err1, res1, body1) {
       if (!err1 && res1.statusCode == 200) {
-
+        if (cb) {
+          // may cause racing condition, doing manual timeout to avoid the chance
+          setTimeout(function() {
+            cb();
+          }, 500);
+        }
       } else {
         console.log('We cannot stop the itv app.');
       }
@@ -71,7 +76,7 @@ app.get('/api/tv/view/stop', function(req, res) {
 
 app.get('/api/notification', function(req, res) {
   console.log('sending notification to DirectTV');
-  // TODO: change view in DirectTV and view video
+  // TODO: show notification
 });
 
 // Attach the socket.io server to the http server
@@ -81,7 +86,17 @@ var io = sio.listen(server);
 io.on('connection', function(socket) {
   console.log('Someone conected');
 
-  socket.on('ping', function(data) {
+  socket.on('ping', function() {
     socket.emit('pong');
+  });
+
+  socket.on('show-video', function() {
+    console.log('changing view to video');
+    stopView(changeToVideoView);
+  });
+
+  socket.on('back', function() {
+    console.log('back to normal view');
+    stopView(backToNormalView);
   });
 });
