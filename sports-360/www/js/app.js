@@ -78,6 +78,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
   var cameraBaseUrl = 'http://192.168.43.1:6624';
   $scope.previewSrc = 'img/att-splash.jpg';
   $scope.done = localStorage.getItem('done-capturing-video');
+  $scope.title = 'Home run reactions';
   localStorage.removeItem('done-capturing-video');
 
   $scope.captureVideo = function() {

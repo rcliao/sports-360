@@ -1,27 +1,55 @@
-Hi, this is Eric. Well, I'm the only one in the team, so that is the introduction of the team! Yay!
+Hi, this is Eric. Well, I'm the only one on the team, so this is the full introduction of the team!
 
-The problem I'm trying to solve is to capture and share the priceless moment from sport events.
+I want to capture and share priceless moments and atmospheres from sport events in the stadium to TV.
 
-This comes from my prior experience going to a couple stadiums like Dodger Stadium or Stable Center for sports events.
+This comes from my prior experience going to see some sports events at stadiums like Dodger Stadium or Stables Center.
 
-I found that my most enjoyable moment was not watching the game but cheering with the fans and enjoy the atmospheres around the stadium.
+I found that my most enjoyable moment was not actually watching the game but cheering with the other people and enjoy the air around the stadium.
 
-So, I want to capture this moment and share it out with the world like other side of sports fans watching events over the TV.
+Thus, I want to capture this very moment and share it out with the world like other fans that are watching over the DirectTV and cant feel the same environment in the stadium.
 
-In summary, Sports 360 is for sharing sport fan reactions in 360 videos to TV.
+To do so, 360 degree video is the best format to represent the scenario and here is how to capture 360 video in Sports 360
 
 --- demo ---
 
-1. Menu explaining device input to LG 360 CAM or Camera captureVideo
-2. Capture video through LG 360 CAM
-3. Preview of capture
-4. Share to DirectTV
-5. DirectTV notification to view fan moment replay
-6. See 360 Video in DirectTV
-7. See 360 Video in App (Google Cardboard)
-8. Explore more content and view it back to TV
+First you can start by connecting to your 360 video camera devices. In this hackathon, we are connecting to LG 360 CAM.
+
+Once you are connected to the camera, you can start capturing 360 video moment by clicking on "Capture video".
+
+And now the LG 360 CAM is capturing 360 video around me at stadium. (point at LG 360 CAM).
+
+After we are finished capturing the moment, we will get a chance to preview on what has been recorded before sharing this video to TV.
+
+Once we are satisfied with the video, we can then "Share to TV".
+
+Share to TV will feature a notification to the people watching the same game in DirectTV.
+
+Fan in front of TV can then select to see the video in their DirectTV.
+
+Furthermore, if they want to see this video in VR environment, they can then view this video in VR.
+
+Noted that this VR experience is better with Google Cardboard!
+
+After viewing the moment, user can choose to save to their library with Sports 360 and explore similar contents in DirectTV or within the app.
+
+With the saved moment, user will be able to review this game later with seeing the full game at DirectTV.
+
+Or view the replay again in VR.
+
+And doing some social sharing on Twitter!
 
 --- end of demo ---
 
-* Technologies used (architecture graph)
-* Contact info
+I used DirectTV, LG 360 CAM sponsor API from AT&T Shape challenge.
+
+In addition to the sponsor API, I used Ionic and Angular to build this phone app, THREE.js to build VR experience and Node.js to build the server.
+
+And you can reach me through Twitter rcliaodev or at desk 121!
+
+Last, I want to shout out to all sponsors! They are all really helpful!
+
+---
+
+Feedback
+
+* Be less technical and more user friendly
