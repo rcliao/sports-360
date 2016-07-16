@@ -1,6 +1,6 @@
-Hi, this is Eric working alone on the project. So this is a single person team.
+Hi, this is Eric. Well, I'm the only one in the team, so that is the introduction of the team! Yay!
 
-The project is called Sports 360 trying to capture the priceless moments from sports events.
+The problem I'm trying to solve is to capture and share the priceless moment from sport events.
 
 This comes from my prior experience going to a couple stadiums like Dodger Stadium or Stable Center for sports events.
 

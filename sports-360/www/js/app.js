@@ -219,7 +219,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
   $scope.socialShare = function() {
     document.addEventListener("deviceready", function () {
       $cordovaSocialSharing
-        .share('What an exciting game!');
+        .share('What an exciting game!', 'Home run reactions', null, 'https://youtu.be/T_G4WCztRM4');
     });
   }
 }])
