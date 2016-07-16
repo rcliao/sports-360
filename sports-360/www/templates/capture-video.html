@@ -1,12 +1,24 @@
 <ion-content>
   <div class="list card">
     <div class="item item-image">
-      <img data-ng-src="{{previewSrc}}">
+      <img data-ng-src="{{previewSrc}}" ng-click="preview()">
     </div>
     <a class="item item-icon-left"
+      ng-show="!done"
       ng-click="captureVideo()">
       <i class="icon ion-camera"></i>
       {{capturing ? 'Stop' : 'Capture'}}
+    </a>
+    <label class="item item-input item-stacked-label"
+      ng-show="done">
+      <span class="input-label">Title</span>
+      <input type="text" placeholder="Title" ng-model="title">
+    </label>
+    <a class="item item-icon-left"
+      ng-show="done"
+      ng-click="share()">
+      <i class="icon ion-share"></i>
+      Share
     </a>
   </div>
 </ion-content>

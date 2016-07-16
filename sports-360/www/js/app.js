@@ -1,4 +1,5 @@
 var serverUrl = 'http://ef16a42e.ngrok.io';
+var socket = io.connect(serverUrl);
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -41,16 +42,23 @@ angular.module('starter', ['ionic'])
         url: "/home",
         templateUrl: "templates/home.html",
         controller: "HomeCtrl"
+      })
+      .state('content-explore', {
+        url: '/content-explore',
+        templateUrl: 'templates/content-explore.html',
+        controller: 'ContentExploreCtrl'
       });
     $urlRouterProvider.otherwise('/home');
 })
 
 .controller('HomeCtrl', ['$scope', '$state', '$http', '$ionicPopup', function($scope, $state, $http, $ionicPopup) {
   $scope.connectedToCamera = false;
+  socket.on('video-vr', function() {
+    $state.go('video');
+  });
 
   $scope.connectToCamera = function() {
     var SSID = 'LGR105_051402.OSC';
-    // happy callback hell >.>
     var cameraWifi = WifiWizard.formatWPAConfig(SSID, '00051402');
     WifiWizard.setWifiEnabled(true, function() {
       WifiWizard.addNetwork(cameraWifi, function() {
@@ -74,9 +82,11 @@ angular.module('starter', ['ionic'])
   };
 }])
 
-.controller('CaptureVideoCtrl', ['$scope', '$http', '$timeout', '$interval', '$ionicPopup', '$ionicLoading', function($scope, $http, $timeout, $interval, $ionicPopup, $ionicLoading) {
+.controller('CaptureVideoCtrl', ['$scope', '$state', '$http', '$timeout', '$interval', '$ionicPopup', '$ionicLoading', function($scope, $state, $http, $timeout, $interval, $ionicPopup, $ionicLoading) {
   var cameraBaseUrl = 'http://192.168.43.1:6624';
   $scope.previewSrc = 'img/att-splash.jpg';
+  $scope.done = localStorage.getItem('done-capturing-video');
+  localStorage.removeItem('done-capturing-video');
 
   $scope.captureVideo = function() {
     $http.post(cameraBaseUrl + '/osc/commands/execute', {
@@ -88,9 +98,43 @@ angular.module('starter', ['ionic'])
     }).then(function(resp) {
       $scope.capturing = true;
       // cant get the binary content to be displayed in browser
+      // $scope.previewInterval = $interval(getLivePreview, 500);
       $timeout(stopCapture, 5000);
     }, handleError);
   };
+
+  $scope.preview = function() {
+    window.open($scope.videoUrl,"_system");
+  };
+
+  $scope.share = function() {
+    WifiWizard.setWifiEnabled(false, function() {
+      $timeout(function() {
+        // share content to DirectTV
+        $http.post(serverUrl + '/api/notification', {
+          title: $scope.title
+        })
+        .then(function() {
+          $state.go('home');
+        });
+      }, 1000);
+    });
+  };
+
+  // CANT GET THIS DAMN BINARY IMAGE TO DISPLAY !@#!$@#!@$!@#!$%!@
+  function getLivePreview() {
+    $http.post(cameraBaseUrl + '/osc/commands/execute', {
+      name: "camera.getLivePreview"
+    }, {
+      headers: {
+        'X-XSRF-Protected': 1
+      }
+    }).then(function(resp) {
+      // display binary content in image tag woot woot
+      var b64Response = btoa(unescape(encodeURIComponent(resp.data)));
+      $scope.previewSrc = 'data:image/jpeg;base64,'+ b64Response;
+    }, handleError);
+  }
 
   function stopCapture() {
     // $interval.cancel($scope.previewInterval);
@@ -116,6 +160,11 @@ angular.module('starter', ['ionic'])
       }
     }).then(function(resp) {
       if (resp.data.state === 'done') {
+        localStorage.setItem('done-capturing-video', true);
+        $scope.videoUrl = cameraBaseUrl + resp.data.results.fileUrl;
+
+        window.open($scope.videoUrl,"_system");
+      } else {
         $scope.capturing = false;
       }
     }, handleError);
@@ -132,6 +181,10 @@ angular.module('starter', ['ionic'])
 .controller('VideoCtrl', ['$scope', '$state', function($scope, $state) {
 
 }])
+
+.controller('ContentExploreCtrl', function() {
+
+})
 
 .directive('cardboardGl', [function() {
 

@@ -80,9 +80,10 @@ app.get('/api/tv/view/stop', function(req, res) {
   stopView();
 });
 
-app.get('/api/notification', function(req, res) {
+app.post('/api/notification', function(req, res) {
   console.log('sending notification to DirectTV');
-  // TODO: show notification
+  stopView(backToNormalView);
+  res.status(200).send();
 });
 
 // Attach the socket.io server to the http server
@@ -101,8 +102,13 @@ io.on('connection', function(socket) {
     stopView(changeToVideoView);
   });
 
+  socket.on('video-vr', function() {
+    console.log('showing video in VR')
+    io.emit('video-vr');
+  });
+
   socket.on('back', function() {
     console.log('back to normal view');
-    stopView(backToNormalView);
+    stopView();
   });
 });

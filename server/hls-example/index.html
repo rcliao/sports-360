@@ -18,6 +18,29 @@
         navigator.setResolution(1280,720);
     </script>
 
+    <style>
+    .notification {
+      min-width: 10em;
+      text-align: left;
+      float: right;
+      margin: 1em;
+      padding: 1em;
+      background-color: #fff;
+      font-weight: 800;
+    }
+
+    .notification.active {
+      border-left: 0.5em solid #76FF03;
+    }
+
+    .notification .meta {
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 0.8em;
+      margin-bottom: 0;
+      text-align: right;
+    }
+    </style>
+
 </head>
 
 <body>
@@ -27,8 +50,11 @@
     <!-- Note, to serve set types in server config.  In Apache, inside the <IfModule mime_module> tag:
         AddType application/x-mpegURL .m3u8
         AddType video/MP2T .ts
-
     -->
+
+    <div class="active notification">
+      <p class="message">View in VR</p>
+    </div>
 
     <video
         src="vid/index.m3u8"
@@ -70,9 +96,6 @@
         var socket = io.connect();
 
         writeScreen = function(txt){
-            var container = document.getElementById('debug');
-            container.innerHTML += txt;
-            //console.log(txt);
         }
 
         function keyHandler(e){
@@ -82,6 +105,7 @@
             //Fall through like it does below.
             switch(code){
                 case 13: // Select / Enter
+                    socket.emit('video-vr');
                     break;
                 case 48 : // 0
                     break;
@@ -157,13 +181,6 @@
         }
 
         window.onkeydown = keyHandler;
-
-        document.getElementById('vid').addEventListener( "qt_timedmetadataupdated", function(){
-
-            //Console.log('metadata updated');
-            writeScreen(' METADATA UPDATED ');
-
-        }, false );
 
     </script>
 
